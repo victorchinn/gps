@@ -2,11 +2,6 @@
 import serial
 import pynmea2
 
-#to display on Sense Hat device
-from sense_hat import SenseHat
-from datetime import datetime
-
-
 #globals
 # to hold data for GPS 
 lat = 0 
@@ -15,9 +10,9 @@ alt = 0
 numsats = 0 
 speed = 0 
 
-
-sensehatboard = SenseHat()
-
+# for Raspberry Pi 3 - must execute command:
+# sudo systemtl stop serial-getty@ttyS0 
+# before running this program
 
 # contiuosly read the serial port
 with serial.Serial('/dev/ttyS0', baudrate=9600, timeout=1) as ser:
@@ -169,16 +164,3 @@ with serial.Serial('/dev/ttyS0', baudrate=9600, timeout=1) as ser:
             pass
         print "LAT:",lat ,"LON:",lon,"ALT:",alt,"#NUMSATS:",numsats,"SPEED:",speed
         
-        t = sensehatboard.get_temperature()
-        p = sensehatboard.get_pressure()
-        h = sensehatboard.get_humidity()
-
-        t = round(t, 1)
-        p = round(p, 1)
-        h = round(h, 1)
-
-        #print(datetime.now())
-        msg = "Temperature = {0}, Pressure = {1}, Humidity = {2}".format(t,p,h)
-        #sensehatboard.show_message(msg, scroll_speed=0.01)
-        print(datetime.now()), ('Temperature: {0} Pressure: {1} Humidity: {2}'.format(t,p,h))
-
