@@ -2,14 +2,24 @@
 import serial
 import pynmea2
 
+#to display on Sense Hat device
+from sense_hat import SenseHat
+from datetime import datetime
+
+
 #globals
+# to hold data for GPS 
 lat = 0 
 lon = 0
 alt = 0
 numsats = 0 
 speed = 0 
 
-# contiuosly read the serail port
+
+sensehatboard = SenseHat()
+
+
+# contiuosly read the serial port
 with serial.Serial('/dev/ttyS0', baudrate=9600, timeout=1) as ser:
     # read 10 lines or WHILE loop to read data from the /dev/ttyS0 GPS on the UART
     while(1):
@@ -159,3 +169,16 @@ with serial.Serial('/dev/ttyS0', baudrate=9600, timeout=1) as ser:
             pass
         print "LAT:",lat ,"LON:",lon,"ALT:",alt,"#NUMSATS:",numsats,"SPEED:",speed
         
+        t = sensehatboard.get_temperature()
+        p = sensehatboard.get_pressure()
+        h = sensehatboard.get_humidity()
+
+        t = round(t, 1)
+        p = round(p, 1)
+        h = round(h, 1)
+
+        #print(datetime.now())
+        msg = "Temperature = {0}, Pressure = {1}, Humidity = {2}".format(t,p,h)
+        #sensehatboard.show_message(msg, scroll_speed=0.01)
+        print(datetime.now()), ('Temperature: {0} Pressure: {1} Humidity: {2}'.format(t,p,h))
+
