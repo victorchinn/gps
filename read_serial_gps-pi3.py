@@ -16,6 +16,7 @@ speed = 0
 
 # contiuosly read the serial port
 with serial.Serial('/dev/ttyS0', baudrate=9600, timeout=1) as ser:
+#with serial.Serial('/dev/ttyAMA0', baudrate=9600, timeout=1) as ser:
     # read 10 lines or WHILE loop to read data from the /dev/ttyS0 GPS on the UART
     while(1):
         try:
