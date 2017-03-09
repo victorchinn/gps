@@ -71,16 +71,25 @@ pi_sense.clear_display()
 # loop
 print('Getting Sensor Data')
 
-for num in range (10):
-    (lat,lon,alt,numsats,speed) = read_serial_gps(15)        # read 5 sentences
-    sensors = pi_sense.getAllSensors()
+while(1):
+    
+    try:
+        (lat,lon,alt,numsats,speed) = read_serial_gps(15)        # read 15 sentences (5 seconds at 3 sentences per second)
+    except Exception as e:
+        #print "Error decoding :"
+        #catch the exception but ignore it if cant decode it
+        pass
+    
+    sensors = pi_sense.getAllSensors()                       # get the sensor readings on PiSenseHat board
 
     sensors['host'] = hostname
 
+    # add these addtional sensor values from the GPS
     sensors['location']['lat'] = { 'value':lat }
     sensors['location']['lon'] = { 'value':lon }
     sensors['location']['alt'] = { 'value':alt, 'unit':'feet'}
     sensors['location']['sats'] = { 'value':numsats}
+    sensors['location']['speed'] = { 'value':speed}
     # end add for GPS
 
     msg['payload'] = str(sensors)

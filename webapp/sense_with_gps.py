@@ -90,6 +90,7 @@ class PiSenseHat(object):
         sensors['location']['lon'] = { 'value':0 }
         sensors['location']['alt'] = { 'value':0 }
         sensors['location']['sats'] = { 'value':0}
+        sensors['location']['speed'] = { 'value':0}
 
         return sensors
 # =============================================================================
