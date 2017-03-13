@@ -93,7 +93,8 @@ while(1):
     # end add for GPS
 
     msg['payload'] = str(sensors)
-    print("msg[]:"+msg['payload'])
+    # do not show payload
+    # print("msg[]:"+msg['payload'])
 
     #   publish(topic, payload=None, qos=0, retain=False)
     mqttc.publish('iot/sensor', msg['payload'], 1)
